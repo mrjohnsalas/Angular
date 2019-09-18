@@ -1,0 +1,27 @@
+<h1>Employees</h1>
+
+<button [routerLink]='["/employee-add"]' class="btn btn-primary">Add Employee</button>
+
+<p *ngIf="!(employees && employees.length)">
+  There are no records to show
+</p>
+
+<table class="table" *ngIf="employees && employees.length">
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Birthdate</th>
+    <th>Actions</th>
+  </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let employee of employees">
+      <td>{{ employee.name }}</td>
+      <td>{{ employee.birthdate | date : 'yyyy-MM-dd' }}</td>
+      <td>
+        <button class="btn btn-primary btn-sm" [routerLink]='["/employee-edit/" + employee.id]'>Edit</button> 
+        <button class="btn btn-danger btn-sm" (click)="delete(employee)">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
