@@ -17,6 +17,7 @@ export class EmployeeFormComponent implements OnInit {
   editMode: boolean = false;
   employeeId: number;
   addressesToRemove: number[] = [];
+  ignorePendingFieldsExists: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -24,6 +25,11 @@ export class EmployeeFormComponent implements OnInit {
     private addressService: AddressService,
     private router: Router,
     private activatedRoute: ActivatedRoute) { }
+
+  pendingFieldsExists(): boolean {
+    if (this.ignorePendingFieldsExists) { return false }
+    return !this.formGroup.pristine;
+  }
 
   ngOnInit() {
     this.formGroup = this.formBuilder.group({
@@ -85,6 +91,7 @@ export class EmployeeFormComponent implements OnInit {
   }
 
   save() {
+    this.ignorePendingFieldsExists = true;
     let employee: Employee = Object.assign({}, this.formGroup.value);
     console.table(employee);
 
